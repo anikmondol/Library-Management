@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Forgot Password || Neptune Library</title>
+  <title>Login || Neptune Library</title>
 
   <link rel="shortcut icon" href="./asset/images/neptune.png" type="image/x-icon">
 
@@ -40,16 +40,20 @@
             <div class="col-md-7">
               <div class="card-body">
                 <h4 class="card-title text-uppercase fw-medium">Neptune Library</h4>
-                <p class="card-text">Enter email to login</p>
-                <form action="./reset-password.html">
+                <p class="card-text">Enter email and password to login</p>
+                <form action="./dashboard.php">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email address</label>
                     <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <div class="mb-3">
+                    <label for="exampleInputPassword1" class="form-label">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1">
+                  </div>
+                  <button type="submit" class="btn btn-primary">Login</button>
                 </form>
                 <hr>
-                <a href="./index.html" class="card-link link-underline-light">Login</a>
+                <a href="./forget-password.php" class="card-link link-underline-light">Forgot Password</a>
               </div>
             </div>
           </div>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password || Neptune Library</title>
+    <title> Register || Neptune Library</title>
 
     <link rel="shortcut icon" href="./asset/images/neptune.png" type="image/x-icon">
 
@@ -38,7 +38,7 @@
               <div class="card-body">
                 <h4 class="card-title text-uppercase fw-medium">Neptune Library</h4>
                 <p class="card-text">Reset Password</p>
-                <form action="./reset-password.html">
+                <form action="./reset-password.php">
                   <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Reset Password Code</label>
                     <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
@@ -54,7 +54,7 @@
                   <button type="submit" class="btn btn-primary">Submit</button>
                 </form>
                 <hr>
-                <a href="./index.html" class="card-link link-underline-light">Login Now</a>
+                <a href="./index.php" class="card-link link-underline-light">Login Now</a>
               </div>
             </div>
           </div>
