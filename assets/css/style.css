@@ -52,3 +52,25 @@ body {
     }
 
 }
+
+
+
+@media (max-width: 500px) {
+
+    .dashboard-tabs .nav-tabs .nav-link{
+        font-size: 10px !important;
+        padding: 6px;
+    }
+
+    .tabs-table th{
+        font-size: 11px;
+        font-weight: 600;
+    }
+
+    .tabs-table td{
+        font-size: 8.5px;
+    }
+
+
+}
+
