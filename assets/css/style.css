@@ -6,6 +6,11 @@ body {
     --offcanvas-width: 270px;
     --color-white: #f5f5f5;
     --topNavbarHeight: 56px;
+    --body-background: #212529;
+}
+
+.body-background{
+    background-color: var(--body-background);
 }
 
 .user_icon {
