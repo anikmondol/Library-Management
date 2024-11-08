@@ -41,4 +41,9 @@ body {
         color: var(--color-white) !important;
         top: var(--topNavbarHeight) !important;
     }
+
+    main{
+        margin-left: var(--offcanvas-width);
+    }
+
 }
