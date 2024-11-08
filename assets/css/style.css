@@ -1,5 +1,6 @@
 body {
     background-color: var(--color-white);
+    
 }
 
 :root {
@@ -11,6 +12,11 @@ body {
 
 .body-background{
     background-color: var(--body-background);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /* justify-content: center; */
+    height: 100vh;
 }
 
 .user_icon {
@@ -51,7 +57,9 @@ body {
         margin-left: var(--offcanvas-width);
     }
 
+
 }
+
 
 
 
@@ -63,7 +71,7 @@ body {
     }
 
     .tabs-table th{
-        font-size: 11px;
+        font-size: 9px;
         font-weight: 600;
     }
 
