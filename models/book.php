@@ -41,6 +41,15 @@ function storeBook($conn, $param)
 }
 
 
+// function to get all books
+function getBooks($conn)
+{
+    $sql = "select b.*, c.name as cat_name from books b left join categories c on c.id = b.category_id order by id desc";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+
 
 // function to get categories
 
@@ -52,7 +61,7 @@ function getCategories($conn)
 }
 
 
-// Function to check isbn no
+// function to check isbn no
 function isIsbnUnique($conn, $isbn, $id = NULL)
 {
     $sql = "select id from books where isbn = '$isbn'";
