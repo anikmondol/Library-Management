@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+
 if ($_SERVER["HTTP_HOST"] == "localhost") {
     define("BASE_URL", "http://localhost/Library-Management/");
     define("DIR_URL", $_SERVER["DOCUMENT_ROOT"] . "/Library-Management/");

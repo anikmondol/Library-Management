@@ -1,6 +1,5 @@
 <?php
 
-// include_once("config/config.php");
 
 $conn = @new mysqli(SERVER_NAME, USERNAME, PASSWORD, DATABASE);
 

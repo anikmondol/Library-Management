@@ -32,6 +32,7 @@ include_once(DIR_URL . "include/header.php");
             <div class="row">
                 <div class="col-md-12">
                     <h4 class="fw-bold text-uppercase">Manage Books</h4>
+                    <?php include_once(DIR_URL . "include/alerts.php"); ?>
                 </div>
             </div>
 
