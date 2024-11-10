@@ -41,7 +41,63 @@ function storeBook($conn, $param)
 }
 
 
-// function to get all books
+// function to update book
+
+function updateBook($conn, $param)
+{
+
+    extract($param);
+
+    ## validation start
+
+    if (empty($title)) {
+        $result = array("error" => "Title is required");
+        return $result;
+    } else if (empty($isbn)) {
+        $result = array("error" => "ISBN is required");
+        return $result;
+    } else if (empty($author)) {
+        $result = array("error" => "Author is required");
+        return $result;
+    } else if (empty($publication_year)) {
+        $result = array("error" => "Publication Year is required");
+        return $result;
+    } else if (empty($category_id)) {
+        $result = array("error" => "Category is required");
+        return $result;
+    }else if (isIsbnUnique($conn, $isbn, $id)) {
+        $result = array("error" => "ISBN is already registered");
+        return $result;
+    }
+
+    ## validation end
+
+    $datetime = date("Y-m-d H:i:s");
+
+    $sql = "UPDATE `books` SET `title`='$title',`author`='$author',`publication_year`='$publication_year',`isbn`='$isbn',`category_id`='$category_id', `updated_at`='$datetime' WHERE id = $id";
+
+    $result["success"] = $conn->query($sql);
+    return $result;
+}
+
+// function to delete the book
+function deleteBook($conn, $id)
+{
+    $sql = "DELETE FROM `books` WHERE id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+// function to update the books status
+function updateBookStatus($conn, $id, $status)
+{
+    $sql = "UPDATE `books` SET `status`='$status' WHERE id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
+
+
+// function to get the books
 function getBooks($conn)
 {
     $sql = "select b.*, c.name as cat_name from books b left join categories c on c.id = b.category_id order by id desc";
@@ -49,7 +105,13 @@ function getBooks($conn)
     return $result;
 }
 
-
+// function to get the book details
+function getBookById($conn, $id)
+{
+    $sql = "SELECT * FROM `books` WHERE id = $id";
+    $result = $conn->query($sql);
+    return $result;
+}
 
 // function to get categories
 

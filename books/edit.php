@@ -6,22 +6,35 @@ include_once(DIR_URL . "models/book.php");
 
 
 
-// Add book functionality 
+// update book functionality 
 
-if (isset($_REQUEST["publish"])) {
+if (isset($_REQUEST["update"])) {
 
-    $res = storeBook($conn, $_REQUEST);
+    $res = updateBook($conn, $_REQUEST);
 
     if (isset($res['success'])) {
-        $_SESSION['success'] = "Book has been created successfully";
+        $_SESSION['success'] = "Book has been update successfully";
         header("LOCATION: " . BASE_URL . "books");
         exit;
     } else {
-        $_SESSION['error'] = $res['error']; //"Something went wrong, please try again. ";
-        header("LOCATION: " . BASE_URL . "books/add.php");
+        $_SESSION['error'] = $res['error'];
+        header("LOCATION: " . BASE_URL . "books/edit.php");
         exit;
     }
 }
+
+// read get parameter to get book data
+
+if (isset($_REQUEST["id"]) && $_REQUEST["id"] > 0) {
+    $book = getBookById($conn, $_REQUEST["id"]);
+    if ($book->num_rows > 0) {
+        $book = mysqli_fetch_assoc($book);
+    }
+} else {
+    header("Location: " . BASE_URL . "books");
+    exit;
+}
+
 
 
 ?>
@@ -54,7 +67,7 @@ if (isset($_REQUEST["publish"])) {
             <!-- cards -->
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="fw-bold text-uppercase">Add Book's</h4>
+                    <h4 class="fw-bold text-uppercase">Edit Book's</h4>
                     <?php include_once(DIR_URL . "include/alerts.php"); ?>
                 </div>
             </div>
@@ -63,31 +76,32 @@ if (isset($_REQUEST["publish"])) {
                 <div class="card">
                     <h5 class="card-header">File the form</h5>
                     <div class="card-body">
-                        <form action="<?= BASE_URL ?>books/add.php" method="post">
+                        <form action="<?= BASE_URL ?>books/edit.php" method="post">
+                            <input type="hidden" name="id" value="<?= $book["id"]; ?>">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleInputEmail1" class="form-label">Book Title</label>
-                                        <input name="title" type="text" class="form-control" id="exampleInputEmail1"
+                                        <input name="title" type="text" class="form-control" value="<?= $book["title"] ?>" id="exampleInputEmail1"
                                             aria-describedby="emailHelp">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">ISBN Number</label>
-                                        <input name="isbn" type="text" class="form-control" id="exampleInputPassword1">
+                                        <input name="isbn" type="text" class="form-control" value="<?= $book["isbn"] ?>" id="exampleInputPassword1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label for="exampleInputPassword1" class="form-label">Author Name</label>
-                                        <input name="author" type="text" class="form-control" id="exampleInputPassword1">
+                                        <input name="author" type="text" class="form-control" value="<?= $book["author"] ?>" id="exampleInputPassword1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="mb-3">
-                                        <label for="exampleInputPassword1" class="form-label">Publication  Year</label>
-                                        <input name="publication_year" type="number" class="form-control" id="exampleInputPassword1">
+                                        <label for="exampleInputPassword1" class="form-label">Publication Year</label>
+                                        <input name="publication_year" type="number" class="form-control" value="<?= $book["publication_year"] ?>" id="exampleInputPassword1">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -99,16 +113,21 @@ if (isset($_REQUEST["publish"])) {
                                         <select name="category_id" id="" class="form-control">
                                             <option value="">Please Select</option>
 
-                                            <?php while ($row = $items->fetch_assoc()) { ?>
-
-                                                <option value="<?= $row["id"]; ?>"><?= $row["name"]; ?></option>
+                                            <?php
+                                            $selected = "";
+                                            while ($row = $items->fetch_assoc()) {
+                                                if ($row["id"] === $book["category_id"]) {
+                                                    $selected = "selected";
+                                                }
+                                            ?>
+                                                <option <?= $selected; ?> value="<?= $row["id"]; ?>"><?= $row["name"]; ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-12">
-                                    <button name="publish" type="submit" class="btn btn-success">Publish</button>
-                                    <button type="reset" class="btn btn-secondary">Cancel</button>
+                                    <button name="update" type="submit" class="btn btn-success">Update</button>
+                                    <a href="<?= BASE_URL ?>books" class="btn btn-secondary">Back</a>
                                 </div>
                             </div>
                         </form>
