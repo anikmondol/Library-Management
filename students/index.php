@@ -10,7 +10,7 @@ $students = getStudents($conn);
 ## delete students
 
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "delete") {
-    $del = $students = delete($conn, $_REQUEST["id"]);
+    $del = delete($conn, $_REQUEST["id"]);
 
     if ($del) {
         $_SESSION["success"] = "Student has been deleted successfully";

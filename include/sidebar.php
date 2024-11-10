@@ -77,9 +77,9 @@
                 <div class="collapse" id="bookloan">
                     <div>
                         <ul class="navbar-nav ps-3">
-                            <li class="font-size-sm"><a class="nav-link" href="#">
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans/add.php"">
                                     <i class="fa-solid fa-plus me-2"></i> Add New</a></li>
-                            <li class="font-size-sm"><a class="nav-link" href="#"><i
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans""><i
                                         class="fa-solid fa-list-check me-2"></i> Manage
                                     All</a></li>
                         </ul>
