@@ -83,7 +83,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
                 <div class="card">
                     <h5 class="card-header">All Books</h5>
                     <div class="card-body">
-                        <table class="table tabs-table">
+                        <table id="data-table" class="table table-responsive table-striped" style="width:100%">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
@@ -153,13 +153,12 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
                                     }
                                 }
                                 ?>
-
-
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+
         </section>
         <!-- main content end -->
 

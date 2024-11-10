@@ -14,7 +14,6 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="<?= BASE_URL;?>assets/images/images/neptune.png">
 
-    <link href="<?= BASE_URL;?>assets/libs/morris.js/morris.css" rel="stylesheet" type="text/css" />
 
     <!-- App css -->
     <link href="<?= BASE_URL;?>assets/css/style.min.css" rel="stylesheet" type="text/css">
@@ -23,6 +22,7 @@
 
     <!-- bootstrap css  -->
     <link rel="stylesheet" href="<?= BASE_URL;?>assets/css/bootstrap.min.css">
+    <link href="<?php echo BASE_URL ?>assets/css/dataTables.bootstrap5.min.css" rel="stylesheet" />
 
     <!-- Custom style -->
     <link rel="stylesheet" href="<?= BASE_URL;?>assets/css/style.css">
