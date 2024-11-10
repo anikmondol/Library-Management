@@ -2,37 +2,37 @@
 
 include_once("../config/config.php");
 include_once(DIR_URL . "config/database.php");
-include_once(DIR_URL . "models/book.php");
+include_once(DIR_URL . "models/student.php");
 
-## get books
-$books = getBooks($conn);
+## get students
+$students = getStudents($conn);
 
-## delete books
+## delete students
 
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "delete") {
-    $del = $books = deleteBook($conn, $_REQUEST["id"]);
+    $del = $students = delete($conn, $_REQUEST["id"]);
 
     if ($del) {
-        $_SESSION["success"] = "Book has been deleted successfully";
+        $_SESSION["success"] = "Student has been deleted successfully";
     } else {
         $_SESSION["error"] = "SomeThing went wrong";
     }
 
-    header("LOCATION: " . BASE_URL . "books");
+    header("LOCATION: " . BASE_URL . "students");
     exit;
 }
 
-## status updates of books
+## status updates of students
 
 if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
-    $update = $books = updateBookStatus($conn, $_REQUEST["id"], $_REQUEST["status"]);
+    $update = $students = updateStatus($conn, $_REQUEST["id"], $_REQUEST["status"]);
 
     if ($update) {
 
         if ($_REQUEST["status"] == 1) {
-            $msg = "Book has been successfully activated";
+            $msg = "Student has been successfully activated";
         } else {
-            $msg = "Book has been successfully deactivated";
+            $msg = "Student has been successfully deactivated";
         }
 
         $_SESSION["success"] = $msg;
@@ -40,7 +40,7 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
         $_SESSION["error"] = "SomeThing went wrong";
     }
 
-    header("LOCATION: " . BASE_URL . "books");
+    header("LOCATION: " . BASE_URL . "students");
     exit;
 }
 
@@ -74,23 +74,21 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
             <!-- cards -->
             <div class="row">
                 <div class="col-md-12">
-                    <h4 class="fw-bold text-uppercase">Manage Books</h4>
+                    <h4 class="fw-bold text-uppercase">Manage students</h4>
                     <?php include_once(DIR_URL . "include/alerts.php"); ?>
                 </div>
             </div>
 
             <div class="col-md-12">
                 <div class="card">
-                    <h5 class="card-header">All Books</h5>
+                    <h5 class="card-header">All students</h5>
                     <div class="card-body">
                         <table id="data-table" class="table table-responsive table-striped" style="width:100%">
                             <thead class="table-dark">
                                 <tr>
                                     <th scope="col">#</th>
-                                    <th scope="col">Book Name</th>
-                                    <th scope="col">Publication Year</th>
+                                    <th scope="col">Student Name</th>
                                     <th scope="col">Author Name</th>
-                                    <th scope="col">ISBN Number</th>
                                     <th scope="col">categories Name</th>
                                     <th scope="col">Status</th>
                                     <th scope="col">Created At</th>
@@ -100,19 +98,17 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
                             <tbody>
 
                                 <?php
-                                if ($books->num_rows > 0) {
+                                if ($students->num_rows > 0) {
                                     $i = 1;
-                                    while ($row = $books->fetch_assoc()) {
-                                        // Generate a unique modal ID using the book's id or loop index
+                                    while ($row = $students->fetch_assoc()) {
+                                        // Generate a unique modal ID using the Student's id or loop index
                                         $modalId = "centeredModal" . $row['id'];
                                 ?>
                                         <tr>
                                             <th><?= $i++; ?></th>
-                                            <td><?= $row["title"]; ?></td>
-                                            <td><?= $row["publication_year"]; ?></td>
-                                            <td><?= $row["author"]; ?></td>
-                                            <td><?= $row["isbn"]; ?></td>
-                                            <td><?= $row["cat_name"]; ?></td>
+                                            <td><?= $row["name"]; ?></td>
+                                            <td><?= $row["email"]; ?></td>
+                                            <td><?= $row["phone_no"]; ?></td>
                                             <td><?php
                                                 if ($row["status"] == 1) {
                                                     echo '<span class="badge text-bg-success">Active</span>';
@@ -136,12 +132,12 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "status") {
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" style="font-size: 10px;"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <a href="<?= BASE_URL ?>books/edit.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
-                                                                <a onclick="return confirm('Are you sure?');" href="<?= BASE_URL ?>books?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
+                                                                <a href="<?= BASE_URL ?>students/edit.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
+                                                                <a onclick="return confirm('Are you sure?');" href="<?= BASE_URL ?>students?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
                                                                 <?php if ($row['status'] == 1) { ?>
-                                                                    <a href="<?= BASE_URL ?>books?action=status&id=<?= $row["id"]; ?>&status=0" class="btn btn-warning btn-sm">Inactive</a>
+                                                                    <a href="<?= BASE_URL ?>students?action=status&id=<?= $row["id"]; ?>&status=0" class="btn btn-warning btn-sm">Inactive</a>
                                                                 <?php } else { ?>
-                                                                    <a href="<?= BASE_URL ?>books?action=status&id=<?= $row["id"]; ?>&status=1" class="btn btn-success btn-sm">Active</a>
+                                                                    <a href="<?= BASE_URL ?>students?action=status&id=<?= $row["id"]; ?>&status=1" class="btn btn-success btn-sm">Active</a>
                                                                 <?php } ?>
                                                             </div>
                                                         </div>

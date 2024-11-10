@@ -13,9 +13,9 @@
     $(document).ready(function() {
         $('#data-table').DataTable({
             lengthMenu:[
-                [8, 20, 30, -1],[8, 20, 30, "All"]
+                [7],[7]
             ],
-            pageLength:8,
+            pageLength:7,
         });
     });
 </script>
