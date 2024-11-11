@@ -23,7 +23,6 @@ if (isset($_REQUEST["submit"])) {
     }
 }
 
-
 ?>
 
 <?php include_once(DIR_URL . "include/header.php"); ?>

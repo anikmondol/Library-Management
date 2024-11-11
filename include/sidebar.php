@@ -77,10 +77,10 @@
                 <div class="collapse" id="bookloan">
                     <div>
                         <ul class="navbar-nav ps-3">
-                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans/add.php"">
-                                    <i class="fa-solid fa-plus me-2"></i> Add New</a></li>
-                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans""><i
-                                        class="fa-solid fa-list-check me-2"></i> Manage
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans/add.php">
+                                    <i class=" fa-solid fa-plus me-2"></i> Add New</a></li>
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>./loans"><i
+                                        class=" fa-solid fa-list-check me-2"></i> Manage
                                     All</a></li>
                         </ul>
                     </div>
@@ -96,9 +96,9 @@
                 <div class="collapse" id="subscription">
                     <div>
                         <ul class="navbar-nav ps-3">
-                            <li class="font-size-sm"><a class="nav-link" href="#">
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>subscriptions">
                                     <i class="fa-solid fa-plus me-2"></i>Plans</a></li>
-                            <li class="font-size-sm"><a class="nav-link" href="#"><i
+                            <li class="font-size-sm"><a class="nav-link" href="<?= BASE_URL; ?>subscriptions/purchase-history.php"><i
                                         class="fa-solid fa-list-check me-2"></i>Purchase History</a></li>
                         </ul>
                     </div>
