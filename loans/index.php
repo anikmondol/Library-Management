@@ -136,11 +136,9 @@ if (isset($_REQUEST["action"]) && $_REQUEST["action"] == "is_return") {
                                                             <div class="modal-body">
                                                                 <a href="<?= BASE_URL ?>loans/edit.php?id=<?= $row['id']; ?>" class="btn btn-primary btn-sm">Edit</a>
                                                                 <a onclick="return confirm('Are you sure?');" href="<?= BASE_URL ?>loans?action=delete&id=<?= $row['id']; ?>" class="btn btn-danger btn-sm">Delete</a>
-                                                                <?php if ($row['is_return'] == 1) { ?>
-                                                                    <a href="<?= BASE_URL ?>loans?action=is_return&id=<?= $row["id"]; ?>&is_return=0" class="btn btn-warning btn-sm">No Returned</a>
-                                                                <?php } else { ?>
+                                                                <?php if ($row['is_return'] == 0) { ?>
                                                                     <a href="<?= BASE_URL ?>loans?action=is_return&id=<?= $row["id"]; ?>&is_return=1" class="btn btn-success btn-sm">Returned</a>
-                                                                <?php } ?>
+                                                                <?php }?>
                                                             </div>
                                                         </div>
                                                     </div>

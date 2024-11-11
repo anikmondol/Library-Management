@@ -13,7 +13,7 @@ if (isset($_REQUEST["submit"])) {
     $res = update($conn, $_REQUEST);
 
     if (isset($res['success'])) {
-        $_SESSION['success'] = "loan has been update successfully";
+        $_SESSION['success'] = "Loan has been update successfully";
         header("LOCATION: " . BASE_URL . "loans");
         exit;
     } else {
@@ -87,8 +87,16 @@ if (isset($_REQUEST["id"]) && $_REQUEST["id"] > 0) {
                                         ?>
                                         <select name="book_id" class="form-control">
                                             <option value="">Please select</option>
-                                            <?php while ($row = $books->fetch_assoc()) { ?>
-                                                <option value="<?php echo $row['id'] ?>"><?php echo $row['title'] ?></option>
+                                            <?php
+                                             $selected = "";
+                                             while ($row = $books->fetch_assoc()) {
+                                                
+                                                if ($row["id"] === $loan["book_id"]) {
+                                                    $selected = "selected";
+                                                }
+                                                
+                                                ?>
+                                                <option <?= $selected; ?> value="<?php echo $row['id'] ?>"><?php echo $row['title'] ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -101,8 +109,14 @@ if (isset($_REQUEST["id"]) && $_REQUEST["id"] > 0) {
                                         ?>
                                         <select name="student_id" class="form-control">
                                             <option value="">Please select</option>
-                                            <?php while ($row = $loans->fetch_assoc()) { ?>
-                                                <option value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
+                                            <?php
+                                             $selected = "";
+                                            while ($row = $loans->fetch_assoc()) { 
+                                                if ($row["id"] === $loan["student_id"]) {
+                                                    $selected = "selected";
+                                                }
+                                                ?>
+                                                <option <?= $selected; ?>  value="<?php echo $row['id'] ?>"><?php echo $row['name'] ?></option>
                                             <?php } ?>
                                         </select>
                                     </div>
@@ -111,14 +125,14 @@ if (isset($_REQUEST["id"]) && $_REQUEST["id"] > 0) {
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Loan Date</label>
-                                        <input type="date" class="form-control" name="loan_date"/>
+                                        <input value="<?= $loan["loan_date"]; ?>" type="date" class="form-control" name="loan_date"/>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="mb-3">
                                         <label class="form-label">Return/Due Date</label>
-                                        <input type="date" class="form-control" name="return_date"/>
+                                        <input value="<?= $loan["return_date"]; ?>" type="date" class="form-control" name="return_date"/>
                                     </div>
                                 </div>
 

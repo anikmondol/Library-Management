@@ -39,36 +39,29 @@ function update($conn, $param)
 {
 
     extract($param);
-    ## validation start
 
-    if (empty($name)) {
-        $result = array("error" => "Name is required");
+    ## Validation start
+    if (empty($book_id)) {
+        $result = array("error" => "Book selection is required");
         return $result;
-    } else if (empty($email)) {
-        $result = array("error" => "Email is required");
+    } else if (empty($student_id)) {
+        $result = array("error" => "Student selection is required");
         return $result;
-    } else if (isEmailUnique($conn, $email, $id)) {
-        $result = array("error" => "Email is already registered");
+    } else if (empty($loan_date)) {
+        $result = array("error" => "Loan date selection is required");
         return $result;
-    } else if (empty($phone_no)) {
-        $result = array("error" => "Phone Number is required");
-        return $result;
-    } else if (isPhoneUnique($conn, $phone_no, $id)) {
-        $result = array("error" => "Phone Number is already registered");
-        return $result;
-    } else if (empty($address)) {
-        $result = array("error" => "address is required");
-        return $result;
-    } else if (isPhoneValid($phone_no)) {
-        $result = array("error" => "Phone Number is not valid");
+    } else if (empty($return_date)) {
+        $result = array("error" => "Return date selection is required");
         return $result;
     }
-
-    ## validation end
+    ## Validation end
 
     $datetime = date("Y-m-d H:i:s");
 
-    $sql = "UPDATE `students` SET `name`='$name',`phone_no`='$phone_no',`email`='$email',`address`='$address',`updated_at`='$datetime' WHERE id = $id";
+
+
+    $sql = "UPDATE `books_loans` SET `book_id`='$book_id',`student_id`='$student_id',`loan_date`='$loan_date',`return_date`='$return_date',`updated_at`='$datetime' WHERE id = $id";
+   
 
     $result["success"] = $conn->query($sql);
     return $result;

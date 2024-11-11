@@ -114,7 +114,7 @@ if (isset($_REQUEST["id"]) && $_REQUEST["id"] > 0) {
                                             <option value="">Please Select</option>
 
                                             <?php
-                                            $selected = "";
+                                           
                                             while ($row = $items->fetch_assoc()) {
                                                 if ($row["id"] === $book["category_id"]) {
                                                     $selected = "selected";
