@@ -18,15 +18,15 @@ if (isset($_REQUEST["submit"])) {
   $res = login($conn, $_REQUEST);
 
   if ($res["status"] == true) {
-      $_SESSION['is_user_login'] = true;
-      $_SESSION['user'] = $res["user"];
-      
-      header("LOCATION: " . BASE_URL . "dashboard.php");
-      exit;
+    $_SESSION['is_user_login'] = true;
+    $_SESSION['user'] = $res["user"];
+
+    header("LOCATION: " . BASE_URL . "dashboard.php");
+    exit;
   } else {
-      $_SESSION['error'] = "Invalid Login information";
-      header("LOCATION: " . BASE_URL);
-      exit;
+    $_SESSION['error'] = "Invalid Login information";
+    header("LOCATION: " . BASE_URL);
+    exit;
   }
 }
 
@@ -85,7 +85,7 @@ if (isset($_REQUEST["submit"])) {
                 <form action="<?= BASE_URL ?>" method="post">
                   <div class="mb-3">
                     <label class="form-label">Email address</label>
-                    <input type="email" name="email" class="form-control"  />
+                    <input type="email" name="email" class="form-control" />
                   </div>
                   <div class="mb-3">
                     <label class="form-label">Password</label>

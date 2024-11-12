@@ -1,3 +1,37 @@
+<?php
+
+include_once("config/config.php");
+include_once("config/database.php");
+include_once(DIR_URL . "models/auth.php");
+
+
+if (isset($_SESSION["is_user_login"])) {
+  header("LOCATION: " . BASE_URL . "dashboard.php");
+  exit;
+}
+
+
+// forgot password functionality 
+
+if (isset($_REQUEST["submit"])) {
+
+  $res = forgotPassword($conn, $_REQUEST);
+
+
+  if ($res["status"] == true) {
+    // $_SESSION['success'] = "Reset password code has been sent on email";
+      header("LOCATION: " . BASE_URL . "reset-password.php");
+      exit;
+  } else {
+      $_SESSION['error'] = "No email found";
+      header("LOCATION: " . BASE_URL . "forgot-password.php");
+      exit;
+  }
+}
+
+
+?>
+
 <!DOCTYPE html>
 
 <html lang="en" data-bs-theme="light" data-menu-color="brand" data-topbar-color="light">
@@ -44,12 +78,13 @@
               <div class="card-body">
                 <h1 class="card-title text-uppercase fw-bold">Start Library</h1>
                 <p class="card-text">Enter email to reset password</p>
-                <form action="./reset-password.php">
+                <?php include_once(DIR_URL . "include/alerts.php"); ?>
+                <form action="<?= BASE_URL ?>forgot-password.php" method="post">
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label class="form-label">Email address</label>
+                    <input type="email" class="form-control" name="email">
                   </div>
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                 </form>
                 <hr>
                 <a href="./index.php" class="card-link text-decoration-none">Login?</a>
