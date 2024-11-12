@@ -19,7 +19,6 @@ function login($conn, $param)
 
     ## validation end
 
-
     $sql = "select * from users where email = '$email'";
     $res = $conn->query($sql);
 
@@ -56,7 +55,6 @@ function forgotPassword($conn, $param)
     }
     ## validation end
 
-
     $sql = "select * from users where email = '$email'";
     $res = $conn->query($sql);
 
@@ -67,11 +65,9 @@ function forgotPassword($conn, $param)
         $user_id = $user["id"];
         $datetime = date("Y-m-d H:i:s");
 
-
         // generate otp
         $otp = rand(1111, 9999);
         $message = "Please use this OTP <b>$otp</b> to reset your password";
-
 
         // send reset password email
 
@@ -89,11 +85,66 @@ function forgotPassword($conn, $param)
         } else {
             $result = array("status" => false);
         }
-        
-
-       
     } else {
         $result = array("status" => false);
+    }
+
+    return $result;
+}
+
+
+
+// function to reset password
+
+function resetPassword($conn, $param)
+{
+
+    extract($param);
+
+    ## validation start
+    if (empty($reset_code)) {
+        $result = array("error" => "Reset Code is required");
+        return $result;
+    } elseif (empty($password)) {
+        $result = array("error" => "Password is required");
+        return $result;
+    } elseif (empty($conf_pass)) {
+        $result = array("error" => "Confirm is required");
+        return $result;
+    }
+    ## validation end
+
+
+    extract($param);
+
+    // $sql = "select * from forgot_password where reset_code = '$reset_code'";
+    
+    $sql = "select * from forgot_password where reset_code = ". $reset_code;
+    $res = $conn->query($sql);
+
+   
+    if ($res->num_rows > 0) {
+        $code = mysqli_fetch_assoc($res);
+
+        if ($password == $conf_pass) {
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+
+            // update password
+            $sql = "UPDATE users SET password = '$hash' where id = " . $code['user_id'];
+            $conn->query($sql);
+
+
+            // delete reset password
+            $sql = "DELETE FROM `forgot_password` WHERE id = ". $code["id"];
+            $conn->query($sql);
+
+
+            $result = array("status" => true, "message" => "Password has been reset successfully");
+        } else {
+            $result = array("status" => false, "message" => "Confirm password doesn't match");
+        }
+    } else {
+        $result = array("status" => false, "message" => "Invalid reset code");
     }
 
     return $result;
