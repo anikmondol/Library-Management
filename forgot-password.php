@@ -11,7 +11,7 @@ if (isset($_SESSION["is_user_login"])) {
 }
 
 
-// forgot password functionality 
+// forgot password functionality (anik(2000))
 
 if (isset($_REQUEST["submit"])) {
 
@@ -19,7 +19,6 @@ if (isset($_REQUEST["submit"])) {
 
 
   if ($res["status"] == true) {
-    // $_SESSION['success'] = "Reset password code has been sent on email";
       header("LOCATION: " . BASE_URL . "reset-password.php");
       exit;
   } else {

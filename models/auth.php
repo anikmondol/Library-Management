@@ -117,12 +117,11 @@ function resetPassword($conn, $param)
 
     extract($param);
 
-    // $sql = "select * from forgot_password where reset_code = '$reset_code'";
-    
-    $sql = "select * from forgot_password where reset_code = ". $reset_code;
+
+    $sql = "select * from forgot_password where reset_code = " . $reset_code;
     $res = $conn->query($sql);
 
-   
+
     if ($res->num_rows > 0) {
         $code = mysqli_fetch_assoc($res);
 
@@ -135,7 +134,7 @@ function resetPassword($conn, $param)
 
 
             // delete reset password
-            $sql = "DELETE FROM `forgot_password` WHERE id = ". $code["id"];
+            $sql = "DELETE FROM `forgot_password` WHERE id = " . $code["id"];
             $conn->query($sql);
 
 
@@ -145,6 +144,57 @@ function resetPassword($conn, $param)
         }
     } else {
         $result = array("status" => false, "message" => "Invalid reset code");
+    }
+
+    return $result;
+}
+
+
+
+
+// function to change password
+
+function changePassword($conn, $param)
+{
+
+    extract($param);
+
+    ## validation start
+    if (empty($current_pass)) {
+        $result = array("error" => "current password is required");
+        return $result;
+    } elseif (empty($new_pass)) {
+        $result = array("error" => "New password is required");
+        return $result;
+    } elseif (empty($conf_pass)) {
+        $result = array("error" => "Confirm is required");
+        return $result;
+    }
+    ## validation end
+
+
+    $loginUserPass = $_SESSION["user"]["password"];
+
+    if (password_verify($current_pass, $loginUserPass)) {
+        
+        if ($new_pass == $conf_pass) {
+
+            $hash = password_hash($new_pass, PASSWORD_DEFAULT);
+
+            // update password
+            $sql = "UPDATE users SET password = '$hash' where id = " . $_SESSION["user"]["id"];
+            $conn->query($sql);
+
+
+            $result = array("status" => true, "message" => "Password has been change successfully");
+
+            
+
+        } else {
+            $result = array("status" => false, "message" => "Confirm password doesn't match");
+        }
+    } else {
+        $result = array("status" => false,  "message" => "Invalid current password");
     }
 
     return $result;

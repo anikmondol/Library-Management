@@ -28,7 +28,7 @@
                                 aria-expanded="false">
                                 <img src="<?= BASE_URL;?>assets/images/images/avatar-4.jpg" alt="Start Library Image Adding Son"
                                     class="user_icon">
-                                Admin
+                                 <?=  $_SESSION["user"]["name"] ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
                                 <li><a class="dropdown-item" href="<?= BASE_URL; ?>my-profile.php">My Profile</a></li>
