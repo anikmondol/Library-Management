@@ -251,9 +251,16 @@ if (isset($_REQUEST['action']) && $_REQUEST['action'] == 'edit' && isset($_REQUE
                                         <button type="submit" name="submit" class="btn btn-success">
                                             Save
                                         </button>
-                                        <button type="reset" class="btn btn-secondary">
-                                            Cancel
-                                        </button>
+                                        <?php if ($plan['id'] == '') {
+                                        ?>
+                                            <button type="reset" class="btn btn-secondary">
+                                                Cancel
+                                            </button>
+                                        <?php } else { ?>
+                                            <a href="<?= BASE_URL ?>subscriptions" type="reset" class="btn btn-secondary">
+                                                Cancel
+                                            </a>
+                                        <?php } ?>
                                     </div>
                                 </div>
                             </form>

@@ -1,10 +1,26 @@
-<?php 
+<?php
 
 include_once("config/config.php");
 include_once("config/database.php");
-include_once(DIR_URL . "include/header.php");
+include_once(DIR_URL . "models/dashboard.php");
+
+
+// get counts date
+$counts = getCounts($conn);
+
+// get tabs date
+$tabs = getTabsDate($conn);
+
+// print_r($tabs);
+// exit;
+
+
+
 
 ?>
+
+<?php include_once(DIR_URL . "include/header.php"); ?>
+
 
 <body>
 
@@ -39,8 +55,8 @@ include_once(DIR_URL . "include/header.php");
                     <div class="card">
                         <div class="card-body text-center">
                             <h6 class="card-title text-muted text-uppercase fw-bold">Total Books</h6>
-                            <h1>130</h1>
-                            <a href="#" class="card-link text-decoration-none">View More</a>
+                            <h1><?= $counts["total_books"] ?></h1>
+                            <a href="<?php echo BASE_URL ?>books" class="card-link text-decoration-none">View More</a>
                         </div>
                     </div>
                 </div>
@@ -48,8 +64,8 @@ include_once(DIR_URL . "include/header.php");
                     <div class="card">
                         <div class="card-body text-center">
                             <h6 class="card-title text-muted text-uppercase fw-bold">Total Students</h6>
-                            <h1>130</h1>
-                            <a href="#" class="card-link text-decoration-none">View More</a>
+                            <h1><?= $counts["total_students"] ?></h1>
+                            <a href="<?php echo BASE_URL ?>students" class="card-link text-decoration-none">View More</a>
                         </div>
                     </div>
                 </div>
@@ -57,8 +73,8 @@ include_once(DIR_URL . "include/header.php");
                     <div class="card">
                         <div class="card-body text-center">
                             <h6 class="card-title text-muted text-uppercase fw-bold">Total Revenue</h6>
-                            <h1>30,500</h1>
-                            <a href="#" class="card-link text-decoration-none">View More</a>
+                            <h1> <i class="fa-solid fa-dollar-sign" style="font-size: 35px;"></i> <?= number_format($counts["total_amount"]); ?></h1>
+                            <a href="<?php echo BASE_URL ?>subscriptions/purchase-history.php" class="card-link text-decoration-none">View More</a>
                         </div>
                     </div>
                 </div>
@@ -66,8 +82,8 @@ include_once(DIR_URL . "include/header.php");
                     <div class="card">
                         <div class="card-body text-center">
                             <h6 class="card-title text-muted text-uppercase fw-bold">Total Books Loan</h6>
-                            <h1>170</h1>
-                            <a href="#" class="card-link text-decoration-none">View More</a>
+                            <h1><?= $counts["total_loans"] ?></h1>
+                            <a href="<?php echo BASE_URL ?>loans" class="card-link text-decoration-none">View More</a>
                         </div>
                     </div>
                 </div>
@@ -102,26 +118,35 @@ include_once(DIR_URL . "include/header.php");
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Preparing For</th>
+                                        <th scope="col">Phone no</th>
                                         <th scope="col">Registered On</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody class="">
-                                    <tr>
-                                        <th scope="row">1</th>
-                                        <td>Mark</td>
-                                        <td>UPSC</td>
-                                        <td>10-05-2024, <span class="d-none d-md-inline-block">12:30 PM</span></td>
-                                        <td><span class="badge text-bg-success">Active</span></td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">2</th>
-                                        <td>Jay Kumar</td>
-                                        <td>UPSC</td>
-                                        <td>10-05-2024, <span class="d-none d-md-inline-block">12:30 PM</span></td>
-                                        <td><span class="badge text-bg-danger">Inactive</span></td>
-                                    </tr>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($tabs["students"] as $student) {
+                                    ?>
+                                        <tr>
+                                            <th scope="row"><?= $i++; ?></th>
+                                            <td><?= $student['name'] ?></td>
+                                            <td><?= $student['phone_no'] ?></td>
+                                            <td><?= date("d-m-Y H:i: A", strtotime($student["created_at"])) ?></td>
+                                            <td>
+                                                <?php
+                                                if ($student['status'] == 1) {
+                                                    echo '<span class="badge text-bg-success">Active</span>';
+                                                } else {
+                                                    echo '<span class="badge text-bg-danger">Inactive</span>';
+                                                }
+
+                                                ?>
+                                            </td>
+                                        </tr>
+
+                                    <?php } ?>
+
                                 </tbody>
                             </table>
                         </div>
@@ -139,26 +164,27 @@ include_once(DIR_URL . "include/header.php");
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td>Indian Art and Culture</td>
-                                        <td>Jai Sharma</td>
-                                        <td>26-05-2023</td>
-                                        <td>20-06-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-success">Active</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th>2</th>
-                                        <td>Tata McGraw Hill CSAT Manual</td>
-                                        <td>Joy</td>
-                                        <td>20-05-2023</td>
-                                        <td>25-05-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-warning">Returned</span>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($tabs["loans"] as $loan) {
+                                    ?>
+                                        <tr>
+                                            <th scope="row"><?= $i++; ?></th>
+                                            <td><?= $loan["book_title"]; ?></td>
+                                            <td><?= $loan["student_name"]; ?></td>
+                                            <td><?= date("d-m-Y", strtotime($loan["loan_date"])) ?></td>
+                                            <td><?= date("d-m-Y", strtotime($loan["return_date"])) ?></td>
+                                            <td>
+                                                <?php
+                                                if ($loan['is_return'] == 1) {
+                                                    echo '<span class="badge text-bg-success">Active</span>';
+                                                } else {
+                                                    echo '<span class="badge text-bg-danger">Inactive</span>';
+                                                }
+                                                ?>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>
@@ -169,64 +195,41 @@ include_once(DIR_URL . "include/header.php");
                                     <tr>
                                         <th scope="col">#</th>
                                         <th scope="col">Student Name</th>
-                                        <th scope="col">Amount</th>
+                                        <th scope="col">Plan</th>
                                         <th scope="col">Start Date</th>
                                         <th scope="col">End Date</th>
                                         <th scope="col">Status</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>1</th>
-                                        <td>Jai Kaushik</td>
-                                        <td>
-                                            <i class="fa-solid fa-indian-rupee-sign"></i> 500
-                                        </td>
-                                        <td>25-05-2023</td>
-                                        <td>24-06-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-success">Active</span>
-                                        </td>
-                                    </tr>
+                                    <?php
+                                    $i = 1;
+                                    foreach ($tabs["subscriptions"] as $subscription) {
+                                    ?>
+                                        <tr>
+                                            <th><?= $i; ?></th>
+                                            <td><?= $subscription["student_name"]; ?></td>
+                                            <td>
+                                                        <span class="badge text-bg-info me-1"><?= $subscription["plan_name"]; ?></span>
+                                                        <i class="fa-solid fa-indian-rupee-sign"></i>
+                                                        <?= number_format($subscription["amount"]); ?>
+                                                    </td>
+                                            <td><?= date("d-m-Y", strtotime($subscription["start_date"])) ?></td>
+                                            <td><?= date("d-m-Y", strtotime($subscription["start_date"])) ?></td>
+                                            <td>
+                                                <?php
+                                                $today = date("Y-m-d");
+                                                if ($subscription["end_date"] >= $today) {
+                                                    # code...
+                                                ?>
+                                                    <span class="badge text-bg-success">Active</span>
+                                                <?php } else { ?>
+                                                    <span class="badge text-bg-danger">Expired</span>
+                                                <?php } ?>
 
-                                    <tr>
-                                        <th>2</th>
-                                        <td>Narayan Soni</td>
-                                        <td>
-                                            <i class="fa-solid fa-indian-rupee-sign"></i> 750
-                                        </td>
-                                        <td>20-05-2023</td>
-                                        <td>19-08-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-success">Active</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>3</th>
-                                        <td>Hemlata Khatri</td>
-                                        <td>
-                                            <i class="fa-solid fa-indian-rupee-sign"></i> 1000
-                                        </td>
-                                        <td>10-05-2023</td>
-                                        <td>09-11-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-success">Active</span>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th>4</th>
-                                        <td>Rakesh</td>
-                                        <td>
-                                            <i class="fa-solid fa-indian-rupee-sign"></i> 500
-                                        </td>
-                                        <td>20-04-2023</td>
-                                        <td>19-05-2023</td>
-                                        <td>
-                                            <span class="badge text-bg-danger">Expired</span>
-                                        </td>
-                                    </tr>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>
