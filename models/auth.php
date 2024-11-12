@@ -176,7 +176,7 @@ function changePassword($conn, $param)
     $loginUserPass = $_SESSION["user"]["password"];
 
     if (password_verify($current_pass, $loginUserPass)) {
-        
+
         if ($new_pass == $conf_pass) {
 
             $hash = password_hash($new_pass, PASSWORD_DEFAULT);
@@ -187,9 +187,6 @@ function changePassword($conn, $param)
 
 
             $result = array("status" => true, "message" => "Password has been change successfully");
-
-            
-
         } else {
             $result = array("status" => false, "message" => "Confirm password doesn't match");
         }
@@ -198,4 +195,78 @@ function changePassword($conn, $param)
     }
 
     return $result;
+}
+
+
+
+// function to change password
+
+function updateProfile($conn, $param)
+{
+
+    extract($param);
+
+
+    ## upload image start
+
+    $uploadTo = "assets/uploads/";
+    $allowedFileTypes = array("jpg", "png", "jpeg", "gif");
+    $fileName = rand(1111, 9999).$_FILES["profile_pic"]["name"];
+    $temPath = $_FILES["profile_pic"]["tmp_name"];
+
+
+    $originalPath = $uploadTo . $fileName;
+
+    $fileType = pathinfo($originalPath, PATHINFO_EXTENSION);
+
+
+    if (!empty($fileName)) {
+       if (in_array($fileType, $allowedFileTypes)) {
+       $upload = move_uploaded_file($temPath, $originalPath);
+       }else{
+         $result = array("status" => false, "message" => "Invalid File formate");
+         return $result;
+       }
+    }
+
+    ## upload image end
+
+
+
+    $user_id = $_SESSION["user"]["id"];
+
+    ## validation start
+    if (empty($name)) {
+        $result = array("error" => "Name is required");
+        return $result;
+    } elseif (empty($email)) {
+        $result = array("error" => "Email is required");
+        return $result;
+    } elseif (empty($phone_no)) {
+        $result = array("error" => "Phone number required");
+        return $result;
+    }
+    ## validation end
+
+    $datetime = date("Y-m-d H:i:s");
+
+    $sql = "UPDATE `users` SET `name`='$name',`email`='$email',`phone`='$phone_no',`updated_at`='$datetime'";
+
+    if (isset($upload)) {
+        $sql .= " ,profile_pic = '$fileName' ";
+        $_SESSION["user"]["profile_pic"] = $fileName;
+    }
+
+    $sql .= " WHERE id =". $user_id;
+    $conn->query($sql);
+
+    // update session user date
+    $_SESSION["user"]["name"] = $name;
+    $_SESSION["user"]["email"] = $email;
+    $_SESSION["user"]["phone"] = $phone_no;
+
+
+    $result = array("status" => true, "message" => "Profile has been update successfully");
+    return $result;
+
 }

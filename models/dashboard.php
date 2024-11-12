@@ -62,7 +62,7 @@ function getTabsDate($conn)
 
 
     ## get recent top books 
-    $sql = "SELECT * FROM `students` order by id desc limit 5";
+    $sql = "SELECT * FROM `students` order by id desc limit 6";
     $res = $conn->query($sql);
     if ($res->num_rows > 0) {
         while ($row = $res->fetch_assoc()) {
@@ -74,7 +74,7 @@ function getTabsDate($conn)
     $sql = "SELECT l.*, b.title as book_title, s.name as student_name  FROM `books_loans` l
      inner join books b on b.id = l.book_id
      inner join students s on s.id = l.student_id
-      order by l.id desc limit 5";
+      order by l.id desc limit 6";
 
 
 
@@ -89,7 +89,7 @@ function getTabsDate($conn)
       $sql = "select s.*, p.title as plan_name, st.name as student_name from subscriptions s
       inner join subscription_plans p on p.id = s.plan_id
       inner join students st on st.id = s.student_id 
-      order by s.id desc limit 5";
+      order by s.id desc limit 6";
     $res = $conn->query($sql);
     if ($res->num_rows > 0) {
         while ($row = $res->fetch_assoc()) {

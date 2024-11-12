@@ -4,6 +4,7 @@ include_once("config/config.php");
 include_once("config/database.php");
 include_once(DIR_URL . "include/middleware.php");
 include_once(DIR_URL . "models/auth.php");
+$user = $_SESSION["user"];
 
 
 
@@ -11,10 +12,10 @@ include_once(DIR_URL . "models/auth.php");
 
 if (isset($_REQUEST["password_submit"])) {
 
- 
+
     $res = changePassword($conn, $_REQUEST);
-  
-  
+
+
     if ($res["status"] == true) {
         $_SESSION['success'] = $res['message'];
         header("LOCATION: " . BASE_URL . "my-profile.php");
@@ -24,10 +25,26 @@ if (isset($_REQUEST["password_submit"])) {
         header("LOCATION: " . BASE_URL . "my-profile.php");
         exit;
     }
+}
 
-  }
-  
+// profile update functionality 
 
+if (isset($_REQUEST["profile_submit"])) {
+
+
+    $res = updateProfile($conn, $_REQUEST);
+
+
+    if ($res["status"] == true) {
+        $_SESSION['success'] = $res['message'];
+        header("LOCATION: " . BASE_URL . "my-profile.php");
+        exit;
+    } else {
+        $_SESSION['error'] = $res['message'];
+        header("LOCATION: " . BASE_URL . "my-profile.php");
+        exit;
+    }
+}
 
 
 ?>
@@ -76,21 +93,21 @@ if (isset($_REQUEST["password_submit"])) {
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label">Full Name</label>
-                                            <input type="text" class="form-control" name="name" value="" />
+                                            <input type="text" class="form-control" name="name" value="<?= $user["name"] ?>" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label">Email</label>
-                                            <input type="text" class="form-control" name="email" value="" />
+                                            <input type="text" class="form-control" name="email" value="<?= $user["email"] ?>" />
                                         </div>
                                     </div>
 
                                     <div class="col-md-12">
                                         <div class="mb-3">
                                             <label class="form-label">Phone Number</label>
-                                            <input type="text" class="form-control" name="phone_no" value="" />
+                                            <input type="text" class="form-control" name="phone_no" value="<?= $user["phone"] ?>" />
                                         </div>
                                     </div>
 
@@ -98,8 +115,13 @@ if (isset($_REQUEST["password_submit"])) {
                                         <div class="mb-3 position-relative extra">
                                             <label class="form-label">Profile Picture</label>
                                             <input type="file" class="form-control" name="profile_pic" />
-                                            <img src="assets/images/images/avatar-4.jpg" style=" position: absolute; right: 0px; width: 38px; bottom: 0px;
-    border-radius: 0px 6px 6px 0;" />
+                                            <?php if ($_SESSION['user']['profile_pic']) { ?>
+                                                <img src="
+                                                    <?php echo BASE_URL . 'assets/uploads/' . $_SESSION['user']['profile_pic'] ?>" style=" position: absolute; right: 0px; width: 38px; height: 38px; object-fit: cover; bottom: 0px; border-radius: 0px 6px 6px 0;" />
+                                            <?php } else { ?>
+                                                <img src="
+                                                    <?php echo BASE_URL . 'assets/images/images/avatar-4.jpg' ?>" style=" position: absolute; right: 0px; width: 38px; height: 38px; object-fit: cover; bottom: 0px; border-radius: 0px 6px 6px 0;" />
+                                            <?php } ?>
                                         </div>
                                     </div>
                                     <div class="col-md-12">
