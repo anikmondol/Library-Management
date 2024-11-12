@@ -1,3 +1,39 @@
+<?php
+
+include_once("config/config.php");
+include_once("config/database.php");
+include_once(DIR_URL . "models/auth.php");
+
+
+if (isset($_SESSION["is_user_login"])) {
+  header("LOCATION: " . BASE_URL . "dashboard.php");
+  exit;
+}
+
+
+// login functionality(anik(2000)) 
+
+if (isset($_REQUEST["submit"])) {
+
+  $res = login($conn, $_REQUEST);
+
+  if ($res["status"] == true) {
+      $_SESSION['is_user_login'] = true;
+      $_SESSION['user'] = $res["user"];
+      
+      header("LOCATION: " . BASE_URL . "dashboard.php");
+      exit;
+  } else {
+      $_SESSION['error'] = "Invalid Login information";
+      header("LOCATION: " . BASE_URL);
+      exit;
+  }
+}
+
+
+?>
+
+
 <!DOCTYPE html>
 
 <html lang="en" data-bs-theme="light" data-menu-color="brand" data-topbar-color="light">
@@ -14,7 +50,6 @@
   <!-- App favicon -->
   <link rel="shortcut icon" href="assets/images/images/neptune.png">
 
-  <link href="assets/libs/morris.js/morris.css" rel="stylesheet" type="text/css" />
 
   <!-- App css -->
   <link href="assets/css/style.min.css" rel="stylesheet" type="text/css">
@@ -46,16 +81,17 @@
                   star library
                 </h1>
                 <p class="card-text">Enter email and password to login</p>
-                <form action="./dashboard.php">
+                <?php include_once(DIR_URL . "include/alerts.php"); ?>
+                <form action="<?= BASE_URL ?>" method="post">
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+                    <label class="form-label">Email address</label>
+                    <input type="email" name="email" class="form-control"  />
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" />
+                    <label class="form-label">Password</label>
+                    <input type="password" name="password" class="form-control" />
                   </div>
-                  <button type="submit" class="btn btn-primary">Login</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Login</button>
                 </form>
                 <hr />
                 <a href="./forgot-password.php" class="card-text text-center link-underline-light">Forgot Password?</a>

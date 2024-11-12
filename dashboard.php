@@ -2,19 +2,14 @@
 
 include_once("config/config.php");
 include_once("config/database.php");
+include_once(DIR_URL . "include/middleware.php");
 include_once(DIR_URL . "models/dashboard.php");
-
 
 // get counts date
 $counts = getCounts($conn);
 
 // get tabs date
 $tabs = getTabsDate($conn);
-
-// print_r($tabs);
-// exit;
-
-
 
 
 ?>
@@ -140,7 +135,6 @@ $tabs = getTabsDate($conn);
                                                 } else {
                                                     echo '<span class="badge text-bg-danger">Inactive</span>';
                                                 }
-
                                                 ?>
                                             </td>
                                         </tr>
