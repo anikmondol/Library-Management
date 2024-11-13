@@ -10,7 +10,7 @@ This is a Library Management System web application designed to efficiently mana
 - cd Library-Management
 
 
-# The seeded admin account credentials are:
+# admin account credentials are:
 
 - Email: admin@dev.com
 - Password: Pa$$w0rd!
