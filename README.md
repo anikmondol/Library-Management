@@ -1,4 +1,4 @@
-# Library Management: Library Management System web application
+# Library Management: web application
 
 ## Overview
 
