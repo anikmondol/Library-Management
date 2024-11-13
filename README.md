@@ -28,7 +28,7 @@ This is a Library Management System web application designed to efficiently mana
 
 ## Technologies Used
 
-- Front-End:
+1. Front-End:
 
 - **[Html](https://html.com/)**:  Structure and layout of the website.
 - **[Css](https://www.w3.org/Style/CSS/)**:  Styling with Flexbox and CSS Grid for responsive design.
@@ -36,12 +36,12 @@ This is a Library Management System web application designed to efficiently mana
 - **[Bootstrap](https://getbootstrap.com/)**: To add interactivity and enhance the user experience.
 
 
-- Back-End:
+2. Back-End:
 
 - **[Php](https://www.php.net/)**:  Server-side scripting language for handling requests, sessions, and data processing.
 
 
-- Database:
+3. Database:
 
 - **[MySQL](https://www.mysql.com/)**:  Used for managing and storing all library records, including users and books.
 
