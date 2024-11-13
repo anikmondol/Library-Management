@@ -7,7 +7,7 @@
              <i class="fa-solid fa-angle-right"></i>
          </button>
          <!-- offcanvas trigger end -->
-         <a class="navbar-brand text-uppercase fw-bold me-auto" href="#">Start Library</a>
+         <a class="navbar-brand text-uppercase fw-bold me-auto"  href="<?= BASE_URL; ?>dashboard.php">Start Library</a>
          <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
              data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
              aria-expanded="false" aria-label="Toggle navigation" style="font-size: 12px;">
