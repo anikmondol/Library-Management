@@ -160,8 +160,12 @@ function changePassword($conn, $param)
     extract($param);
 
     ## validation start
-    if (empty($current_pass)) {
-        $result = array("error" => "current password is required");
+    if (empty($param)) {
+        $result = array("error" => "Selected the filed");
+        return $result;
+    }
+    elseif (empty($current_pass)) {
+        $result = array("error" => "Current password is required");
         return $result;
     } elseif (empty($new_pass)) {
         $result = array("error" => "New password is required");

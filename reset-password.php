@@ -82,18 +82,34 @@ if (isset($_REQUEST["submit"])) {
                                 <p class="card-text"> Reset Password</p>
                                 <?php include_once(DIR_URL . "include/alerts.php"); ?>
                                 <form action="<?= BASE_URL ?>reset-password.php" method="post">
-                                    <div class="mb-3">
+                                    <div class="form-group mb-3">
                                         <label class="form-label">Reset Password Code</label>
-                                        <input name="reset_code" type="text" class="form-control">
+                                        <div>
+                                            <input id="reset_code" type="password" class="form-control" name="reset_code">
+                                            <span toggle="#reset_code" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('reset_code')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">New Password</label>
-                                        <input name="password" type="password" class="form-control">
+                                        <div>
+                                            <input id="password-field" type="password" class="form-control" name="password">
+                                            <span toggle="#password-field" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('password-field')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label class="form-label">Confirm Password</label>
-                                        <input name="conf_pass" type="password" class="form-control">
+                                        <div>
+                                            <input id="conf_pass" type="password" class="form-control" name="conf_pass">
+                                            <span toggle="#conf_pass" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('conf_pass')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                                        </div>
                                     </div>
+
                                     <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                                 </form>
                                 <hr>
@@ -124,6 +140,9 @@ if (isset($_REQUEST["submit"])) {
 
     <!-- Dashboard init-->
     <script src="assets/js/pages/dashboard.js"></script>
+
+    <!-- script js file links -->
+    <script src="assets/js/script.js"></script>
 
 </body>
 

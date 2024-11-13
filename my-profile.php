@@ -144,23 +144,32 @@ if (isset($_REQUEST["profile_submit"])) {
                         <div class="card-body">
                             <form method="post" action="<?php echo BASE_URL ?>my-profile.php">
                                 <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">Current Password</label>
-                                            <input type="password" class="form-control" name="current_pass" />
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">New Password</label>
-                                            <input type="password" class="form-control" name="new_pass" />
-                                        </div>
-                                    </div>
 
-                                    <div class="col-md-12">
-                                        <div class="mb-3">
-                                            <label class="form-label">Confirm Password</label>
-                                            <input type="password" class="form-control" name="conf_pass" />
+                                    <div class="form-group mb-3">
+                                        <label class="form-label">Current Password</label>
+                                        <div>
+                                            <input id="reset_code" type="password" class="form-control" name="current_pass">
+                                            <span toggle="#reset_code" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('reset_code')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">New Password</label>
+                                        <div>
+                                            <input id="password-field" type="password" class="form-control" name="new_pass">
+                                            <span toggle="#password-field" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('password-field')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Confirm Password</label>
+                                        <div>
+                                            <input id="conf_pass" type="password" class="form-control" name="conf_pass">
+                                            <span toggle="#conf_pass" class="fa fa-fw fa-eye toggle-password me-2"
+                                                onclick="togglePasswordVisibility('conf_pass')"
+                                                style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
                                         </div>
                                     </div>
 

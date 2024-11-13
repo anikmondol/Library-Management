@@ -88,8 +88,13 @@ if (isset($_REQUEST["submit"])) {
                     <input type="email" name="email" class="form-control" />
                   </div>
                   <div class="mb-3">
-                    <label class="form-label">Password</label>
-                    <input type="password" name="password" class="form-control" />
+                    <label class="form-label">New Password</label>
+                    <div>
+                      <input id="password-field" type="password" class="form-control" name="password">
+                      <span toggle="#password-field" class="fa fa-fw fa-eye toggle-password me-2"
+                        onclick="togglePasswordVisibility('password-field')"
+                        style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
+                    </div>
                   </div>
                   <button type="submit" name="submit" class="btn btn-primary">Login</button>
                 </form>
@@ -120,6 +125,9 @@ if (isset($_REQUEST["submit"])) {
 
   <!-- Dashboard init-->
   <script src="assets/js/pages/dashboard.js"></script>
+
+  <!-- script js file links -->
+  <script src="assets/js/script.js"></script>
 
 </body>
 
