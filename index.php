@@ -11,6 +11,23 @@ if (isset($_SESSION["is_user_login"])) {
 }
 
 
+// check cookies 
+
+
+if (isset($_COOKIE["login_status"])) {
+
+  // read user info from cookies
+   $user_json = $_COOKIE["login_user"];
+   $user = json_decode($user_json, true);
+   $_SESSION['is_user_login'] = true;
+   $_SESSION['user'] = $user;
+
+ 
+  header("LOCATION: " . BASE_URL . "dashboard.php");
+  exit;
+}
+
+
 // login functionality(anik(2000)) 
 
 if (isset($_REQUEST["submit"])) {
@@ -21,8 +38,23 @@ if (isset($_REQUEST["submit"])) {
     $_SESSION['is_user_login'] = true;
     $_SESSION['user'] = $res["user"];
 
+
+    # keep me logged in
+    if (isset($_REQUEST["keep_logged_in"]) && $_REQUEST["keep_logged_in"]  == 'on') {
+      # 7 days seconds
+       $expire_time = time() + (7 * (24 * 60 * 60));
+      
+      setcookie("login_status", "login", time() + 60, "/");
+
+      // array to json conversion
+      $user_json = json_encode( $_SESSION['user'], true);
+      setcookie("login_user", $user_json, $expire_time, "/");
+    }
+
+
     header("LOCATION: " . BASE_URL . "dashboard.php");
     exit;
+    
   } else {
     $_SESSION['error'] = "Invalid Login information";
     header("LOCATION: " . BASE_URL);
@@ -88,13 +120,19 @@ if (isset($_REQUEST["submit"])) {
                     <input type="email" name="email" class="form-control" />
                   </div>
                   <div class="mb-3">
-                    <label class="form-label">New Password</label>
+                    <label class="form-label">Password</label>
                     <div>
                       <input id="password-field" type="password" class="form-control" name="password">
                       <span toggle="#password-field" class="fa fa-fw fa-eye toggle-password me-2"
                         onclick="togglePasswordVisibility('password-field')"
                         style="float: right; margin-left: -25px; margin-top: -25px; position: relative; z-index: 2;"></span>
                     </div>
+                  </div>
+                  <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="keep_logged_in" id="keep_logged_in">
+                    <label class="form-check-label" for="keep_logged_in">
+                      Keep me logged in for 7 days
+                    </label>
                   </div>
                   <button type="submit" name="submit" class="btn btn-primary">Login</button>
                 </form>
